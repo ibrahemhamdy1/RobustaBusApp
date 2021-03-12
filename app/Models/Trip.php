@@ -18,6 +18,7 @@ class Trip extends Model
         'start_date_and_time',
         'end_date_and_time',
     ];
+
     /**
      * Add the bus relationship.
      *
@@ -28,4 +29,13 @@ class Trip extends Model
         return $this->belongsTo(Bus::class);
     }
 
+    /**
+     * Add the stations relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function stations()
+    {
+        return $this->belongsToMany(Station::class)->withTimestamps();
+    }
 }
