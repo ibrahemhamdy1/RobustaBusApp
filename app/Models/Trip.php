@@ -18,4 +18,14 @@ class Trip extends Model
         'start_date_and_time',
         'end_date_and_time',
     ];
+    /**
+     * Add the bus relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function bus()
+    {
+        return $this->belongsTo(Bus::class);
+    }
+
 }
