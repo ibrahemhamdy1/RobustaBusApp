@@ -18,7 +18,7 @@ class CreateTripsTable extends Migration
             $table->timestamp('start_date_and_time');
             $table->timestamp('end_date_and_time');
 
-            $table->foreignId('bus_id');
+            $table->foreignId('bus_id')->nullable();
             $table->foreign('bus_id')->references('id')->on('buses');
 
             $table->timestamps();
