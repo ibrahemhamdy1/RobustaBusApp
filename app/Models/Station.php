@@ -17,4 +17,14 @@ class Station extends Model
     protected $fillable = [
         'name',
     ];
+
+    /**
+     * Setup the relationship for the trips.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function trips()
+    {
+        return $this->belongsToMany(Station::class);
+    }
 }
