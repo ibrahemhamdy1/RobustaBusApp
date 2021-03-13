@@ -17,4 +17,53 @@ class Bus extends Model
     protected $fillable = [
         'number',
     ];
+
+    /**
+     * Setup the seats relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function seats()
+    {
+        return $this->hasMany(Seat::class);
+    }
+
+    /**
+     * Get all the for a specific trip.
+     *
+     * @param  int  $formStationId
+     * @param  int  $toSatiationId
+     *
+     * @return Illuminate\Database\Eloquent\Collection
+     */
+    public function reservedSeatsInBus(int $formStationId, int $toSatiationId)
+    {
+        return dd(get_class($this->seats()->where('from_station_id', $formStationId)
+            ->where('to_station_id', $toSatiationId)->get()));
+    }
+
+    /**
+     * Get available seats for a specific trip.
+     *
+     * @param  int  $formStationId
+     * @param  int  $toSatiationId
+     *
+     * @return int
+     */
+    public function availableSeats(int $formStationId, int $toSatiationId)
+    {
+        return $this->available_seats - $this->reservedSeatsInBus($formStationId, $toSatiationId)->count();
+    }
+
+    /**
+     * Generate a random number for available seats.
+     *
+     * @return int
+     */
+    public function randomNumberOfAvailableSeats()
+    {
+        while (in_array(($seatNumber = rand(1, $this->available_seats)), $this->seats->pluck('number')->toArray()));
+
+        return $seatNumber;
+    }
 }
