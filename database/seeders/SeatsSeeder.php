@@ -24,8 +24,8 @@ class SeatsSeeder extends Seeder
         $bus = $trip->bus;
         $busSeats = $bus->seats;
 
-        $availableSeatsInBus = $bus->availableSeats($stations[0], $stations[1]);
-        if ($availableSeatsInBus > 0) {
+        $numberOfAvailableSeatsInBus = $bus->numberOfAvailableSeats($stations[0], $stations[1]);
+        if ($numberOfAvailableSeatsInBus > 0) {
             while (in_array(($seatNumber = rand(1, $bus->available_seats)), $busSeats->pluck('number')->toArray()));
 
             Seat::create([

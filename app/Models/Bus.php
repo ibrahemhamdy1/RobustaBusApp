@@ -38,8 +38,8 @@ class Bus extends Model
      */
     public function reservedSeatsInBus(int $formStationId, int $toSatiationId)
     {
-        return dd(get_class($this->seats()->where('from_station_id', $formStationId)
-            ->where('to_station_id', $toSatiationId)->get()));
+        return $this->seats()->where('from_station_id', $formStationId)
+            ->where('to_station_id', $toSatiationId)->get();
     }
 
     /**
@@ -50,7 +50,7 @@ class Bus extends Model
      *
      * @return int
      */
-    public function availableSeats(int $formStationId, int $toSatiationId)
+    public function numberOfAvailableSeats(int $formStationId, int $toSatiationId)
     {
         return $this->available_seats - $this->reservedSeatsInBus($formStationId, $toSatiationId)->count();
     }
@@ -60,10 +60,18 @@ class Bus extends Model
      *
      * @return int
      */
-    public function randomNumberOfAvailableSeats()
+    public function randomSeatNumberOfAvailableSeats()
     {
-        while (in_array(($seatNumber = rand(1, $this->available_seats)), $this->seats->pluck('number')->toArray()));
+        return array_rand($this->availableSeatsNumbers(), 1);
+    }
 
-        return $seatNumber;
+    /**
+     * Available seats numbers.
+     *
+     * @return array
+     */
+    public function availableSeatsNumbers()
+    {
+        return array_diff(range(1, $this->available_seats), $this->seats->pluck('number')->toArray());
     }
 }
