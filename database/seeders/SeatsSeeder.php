@@ -23,17 +23,20 @@ class SeatsSeeder extends Seeder
         $stations = $trip->stations()->orderBy('id')->limit(2)->get()->pluck('id')->toArray();
         $bus = $trip->bus;
         $busSeats = $bus->seats;
-
+        $fromStationId = $stations[0];
+        $toStationId = $stations[1];
         $numberOfAvailableSeatsInBus = $bus->numberOfAvailableSeats($stations[0], $stations[1]);
         if ($numberOfAvailableSeatsInBus > 0) {
             while (in_array(($seatNumber = rand(1, $bus->available_seats)), $busSeats->pluck('number')->toArray()));
 
-            Seat::create([
+            $seat = Seat::create([
                 'number' => $seatNumber,
-                'bus_id' => $bus->id,
-                'from_station_id' => $stations[0],
-                'to_station_id' => $stations[1],
             ]);
+
+            $seat->bus()->associate($bus);
+            $seat->fromStation()->associate($fromStationId);
+            $seat->toStation()->associate($toStationId);
+            $seat->save();
         }
     }
 }
