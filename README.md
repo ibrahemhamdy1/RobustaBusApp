@@ -15,7 +15,7 @@
     - POST| api/trips
         -  `http://robustabusapp.test/api/trips?from_date=2021-03-14 09:20:20&from_station=Cairo&to_station=AlFayyum`
 
-- # Tou could add this data to your postman to test
+- # You could add this data to your postman to test
         - "from_date" : "2021-03-14 09:20:20"
         - "from_station" : "Cairo",
         - "to_station" : "AlFayyum"
