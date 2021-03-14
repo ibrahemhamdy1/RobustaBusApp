@@ -7,12 +7,12 @@ use App\Http\Controllers\Controller as Controller;
 class BaseController extends Controller
 {
     /**
-     * success response method.
-     *
-     * @return \Illuminate\Http\Response
+     * Success response method.
      *
      * @param  mixed  $result
      * @param  mixed  $message
+     *
+     * @return \Illuminate\Http\Response
      */
     public function sendResponse($result, $message)
     {
@@ -28,11 +28,11 @@ class BaseController extends Controller
     /**
      * return error response.
      *
-     * @return \Illuminate\Http\Response
-     *
      * @param  mixed  $error
      * @param  mixed  $errorMessages
      * @param  int  $code
+     *
+     * @return \Illuminate\Http\Response
      */
     public function sendError($error, $errorMessages = [], $code = 404)
     {
