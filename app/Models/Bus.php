@@ -58,20 +58,26 @@ class Bus extends Model
     /**
      * Generate a random number for available seats.
      *
+     * @param  int  $formStationId
+     * @param  int  $toSatiationId
+     *
      * @return int
      */
-    public function randomSeatNumberOfAvailableSeats()
+    public function randomSeatNumberOfAvailableSeats(int $formStationId, int $toSatiationId)
     {
-        return array_rand($this->availableSeatsNumbers(), 1);
+        return array_rand($this->availableSeatsNumbers($formStationId, $toSatiationId), 1);
     }
 
     /**
      * Available seats numbers.
      *
+     * @param  int  $formStationId
+     * @param  int  $toSatiationId
+     *
      * @return array
      */
-    public function availableSeatsNumbers()
+    public function availableSeatsNumbers(int $formStationId, int $toSatiationId)
     {
-        return array_diff(range(1, $this->available_seats), $this->seats->pluck('number')->toArray());
+        return array_diff(range(1, $this->available_seats), $this->reservedSeatsInBus($formStationId, $toSatiationId)->pluck('number')->toArray());
     }
 }
