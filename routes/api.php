@@ -19,4 +19,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('trips', TripController::class)->only('index');
+Route::resource('trips', TripController::class)->only('index', 'store');
